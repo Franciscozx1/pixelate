@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Disponíveis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pos-login.css">
+</head>
+<body>
+
+    <nav class="nav-pill-3d">
+        
+        <div class="nav-left-group">
+            <div class="dropdown-profile">
+                <a href="cadastro-login.html" class="profile-icon" title="Fazer Login">
+                    👤
+                </a>
+                </div>
+
+            <div class="nav-links">
+                <a href="duvidas.html" target="_blank" class="nav-btn-stack">
+                    <span>DÚVIDAS</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-right-group">
+             </div>
+    </nav>
+
+    <main class="hero-section">
+        
+        <h1 class="game-title">EVENTOS</h1>
+
+        <p class="intro-pixel-text">
+            Visualize os eventos disponíveis na nossa plataforma.
+            Para participar ou criar o seu próprio campeonato, 
+            faça login agora mesmo!
+        </p>
+
+        <div class="white-box-events">
+            
+            <div class="box-header-row">
+                <img src="/assets/darkshadow.jpg" alt="Avatar" class="char-img">
+                <p class="box-desc-text">
+                    Abaixo estão listados os eventos ativos. 
+                    Crie sua conta para garantir sua vaga!
+                </p>
+            </div>
+
+            <h3 class="section-title">EVENTOS DO MÊS</h3>
+
+            <div class="events-list">
+                <p style="text-align:center; font-size:10px; margin-top:20px;">Carregando eventos...</p>
+            </div>
+
+            <div class="btn-container">
+                <button onclick="window.location.href='cadastro-login.html'" class="create-event-btn" style="font-size: 10px;">
+                    FAÇA LOGIN PARA CRIAR UM EVENTO
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const listaEventos = document.querySelector('.events-list');
+
+            // Carrega os eventos do backend
+            fetch('http://localhost:3000/eventos')
+                .then(response => response.json())
+                .then(eventos => {
+                    listaEventos.innerHTML = ''; // Limpa o "Carregando..."
+
+                    if(eventos.length === 0) {
+                        listaEventos.innerHTML = '<p style="text-align:center; font-size:10px;">Nenhum evento encontrado.</p>';
+                        return;
+                    }
+
+                    // Renderiza cada evento (SEM BOTÕES)
+                    eventos.forEach(evento => {
+                        // Formata a data
+                        let dataF = evento.data_evento;
+                        if(dataF && dataF.includes('-')) {
+                            const partes = dataF.split('T')[0].split('-'); 
+                            dataF = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                        }
+                        
+                        const nomeEx = evento.titulo || evento.nome || "Evento";
+                        const horaEx = evento.hora_evento || evento.hora || "00:00";
+
+                        // HTML Simples (Sem botões de ação)
+                        const html = `
+                            <div class="event-item">
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <p style="line-height: 2;">
+                                        <strong>${nomeEx}</strong><br>
+                                        DATA: ${dataF} às ${horaEx}<br>
+                                        Local: ${evento.local}<br>
+                                        Vagas: ${evento.vagas} | Valor: R$ ${evento.valor}
+                                    </p>
+                                </div>
+                                <div class="dashed-line"></div>
+                            </div>
+                        `;
+                        listaEventos.insertAdjacentHTML('beforeend', html);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    listaEventos.innerHTML = '<p style="text-align:center; font-size:10px; color:red;">Erro ao carregar eventos.</p>';
+                });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pos-login.css">
+</head>
+<body>
+
+    <nav class="nav-pill-3d">
+        
+        <div class="nav-left-group">
+            <div class="dropdown-profile">
+                <a href="#" class="profile-icon" onclick="toggleProfileDropdown()">
+                    👤
+                </a>
+                <div id="profileDropdownContent" class="dropdown-content">
+                    <a href="#" onclick="abrirModalPerfil(event); return false;">Meu Perfil</a>
+                    <a href="#" onclick="fazerLogout()">Sair</a>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="duvidas.html" target="_blank" class="nav-btn-stack">
+
+                    <span>DÚVIDAS</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-right-group">
+             </div>
+    </nav>
+
+    <main class="hero-section">
+        
+        <h1 class="game-title">EVENTOS</h1>
+
+        <p class="intro-pixel-text">
+            Aqui você encontra todos os eventos disponíveis para participar. 
+            Explore as opções, confira os detalhes e escolha em quais deseja entrar. 
+            Fique sempre por dentro das novas oportunidades!
+        </p>
+
+        <div class="white-box-events">
+            
+            <div class="box-header-row">
+                <img src="/assets/darkshadow.jpg" alt="Avatar" class="char-img">
+                <p class="box-desc-text">
+                    Aqui você pode visualizar os eventos disponíveis e se inscrever nos que desejar. 
+                    Caso prefira, no final da página também é possível criar seu próprio evento!
+                </p>
+            </div>
+
+            <h3 class="section-title">EVENTOS DO MÊS</h3>
+
+            <div class="events-list">
+                </div>
+
+            <div class="btn-container">
+                <button id="btnAbrirModal" class="create-event-btn">CRIAR EVENTO</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div id="modalCriarEvento" class="modal-overlay">
+        <div class="modal-box">
+            <h2 class="section-title" style="text-align: center;">NOVO EVENTO</h2>
+            
+            <form id="formNovoEvento">
+                <label>Nome do Evento:</label>
+                <input type="text" id="nomeEvento" placeholder="Ex: Campeonato de LoL" required>
+
+                <div class="row">
+                    <div>
+                        <label>Data:</label>
+                        <input type="date" id="dataEvento" required>
+                    </div>
+                    <div>
+                        <label>Hora:</label>
+                        <input type="time" id="horaEvento" required>
+                    </div>
+                </div>
+
+                <label>Local:</label>
+                <input type="text" id="localEvento" placeholder="Ex: Discord / Rua X" required>
+
+                <div class="row">
+                    <div>
+                        <label>Vagas:</label>
+                        <input type="number" id="vagasEvento" placeholder="50" required>
+                    </div>
+                    <div>
+                        <label>Valor (R$):</label>
+                        <input type="text" id="valorEvento" placeholder="0,00" required>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="create-event-btn cancel-btn" onclick="fecharModal()">CANCELAR</button>
+                    <button type="submit" class="create-event-btn save-btn">SALVAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalEditarEvento" class="modal-overlay">
+        <div class="modal-box">
+            <h2 class="section-title" style="text-align: center;">EDITAR EVENTO</h2>
+            
+            <form id="formEditarEvento">
+                <input type="hidden" id="editIdEvento">
+
+                <label>Nome do Evento:</label>
+                <input type="text" id="editNome" required>
+
+                <div class="row">
+                    <div>
+                        <label>Data:</label>
+                        <input type="date" id="editData" required>
+                    </div>
+                    <div>
+                        <label>Hora:</label>
+                        <input type="time" id="editHora" required>
+                    </div>
+                </div>
+
+                <label>Local:</label>
+                <input type="text" id="editLocal" required>
+
+                <div class="row">
+                    <div>
+                        <label>Vagas:</label>
+                        <input type="number" id="editVagas" required>
+                    </div>
+                    <div>
+                        <label>Valor (R$):</label>
+                        <input type="text" id="editValor" required>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="create-event-btn cancel-btn" onclick="fecharModalEditar()">CANCELAR</button>
+                    <button type="submit" class="create-event-btn edit-confirm-btn">ATUALIZAR</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalPerfil" class="modal-overlay">
+    <div class="modal-box">
+        <h2 class="section-title" style="text-align: center;">MEU PERFIL</h2>
+        
+        <form id="formEditarPerfil">
+            <label>Nome de Usuário:</label>
+            <input type="text" id="perfilNome" required>
+
+            <label>E-mail:</label>
+            <input type="email" id="perfilEmail" required>
+
+            <div class="dashed-line" style="margin: 20px 0;"></div>
+
+            <label style="color: #ff4444;">Digite sua senha para confirmar:</label>
+            <input type="password" id="perfilSenhaConfirmacao" placeholder="Sua senha atual" required>
+
+            <div class="modal-buttons">
+                <button type="button" class="create-event-btn cancel-btn" onclick="fecharModalPerfil()">FECHAR</button>
+                <button type="submit" class="create-event-btn save-btn">SALVAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script src="main.js"></script>
+</body>
+</html>

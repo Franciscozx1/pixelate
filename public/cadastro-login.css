@@ -1,0 +1,125 @@
+/* ----------------CADASTRO-LOGIN_HTML------------------------------------------------------------------------------------*/
+
+/* 1. Estilos da Página e Fundo */
+.login-page {
+    /* Cor de Fundo: #5681CA */
+    background-color: #5681CA; 
+    font-family: 'Press Start 2P', monospace;
+    color: white; 
+    
+    /* Layout para centralizar */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    min-height: 100vh;
+    padding: 50px 20px;
+    box-sizing: border-box;
+}
+
+/* 2. Container Principal (Define o layout de 2 colunas) */
+.login-page .container {
+    display: flex;
+    gap: 80px; /* Espaço entre as colunas */
+    flex-wrap: wrap; 
+    justify-content: center;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* 3. Coluna de Formulário (Bloco de Login/Cadastro) */
+.login-page .form-column {
+    width: 300px; 
+    text-align: center;
+}
+
+/* 4. Títulos (CRIAR CONTA / LOGIN) */
+.login-page h2.pixel-title {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 0 #FFFFFF; /* Contorno branco */
+    color: #00008B; /* Cor de preenchimento (Azul escuro) */
+}
+
+/* 5. Estilo dos Formulários e Labels */
+.login-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 0; 
+    margin-bottom: 40px; 
+}
+
+.login-page label {
+    font-size: 0.8em;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    align-self: flex-start; /* Alinha a label à esquerda */
+    text-shadow: 1px 1px 0 #000000; /* Contorno preto sutil */
+}
+
+/* 6. Inputs de Texto/Senha (Estilo do Campo Arredondado) */
+.login-page input {
+    font-family: Arial, sans-serif; 
+    padding: 10px;
+    border: 3px solid #FFFFFF; 
+    border-radius: 50px; /* Arredondamento */
+    background-color: #FFFFFF;
+    color: #333333; 
+    font-size: 1em;
+    box-shadow: 4px 4px 0 #4A4A4A; 
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+}
+
+/* 7. Botões e Links (.pixel-button) */
+.pixel-button {
+    font-family: 'Press Start 2P', monospace; 
+    text-decoration: none;
+    text-align: center;
+    padding: 15px 10px;
+    margin-top: 20px;
+    border: 3px solid #000000; 
+    border-radius: 5px; 
+    cursor: pointer;
+    font-size: 0.7em;
+    color: #000000; /* Texto preto para alto contraste */
+    box-shadow: 4px 4px 0 #4A4A4A; 
+    transition: all 0.1s ease-out;
+    display: block;
+}
+
+/* 8. Cores Específicas */
+.login-page .pixel-green {
+    font-family: "Press Start 2P", sans-serif
+     monospace;
+    background-color: #00FF00; /* Verde Vibrante */
+}
+
+.login-page .pixel-yellow {
+    background-color: #FFFF00; /* Amarelo Vibrante */
+}
+
+/* 9. Efeito de Clique / Pressionar */
+.login-page .pixel-button:active { 
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #4A4A4A; 
+}
+
+
+.game-title {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:400;
+  font-style: normal;
+}
+ 
+.pixel-title {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:400;
+  font-style: normal;
+}
+
+
