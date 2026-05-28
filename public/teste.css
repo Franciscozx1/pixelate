@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
 :root {
-    --color-background: #0E0B24; /* Fundo mais escuro/azulado */
+    --color-background: #030322; /* Fundo mais escuro/azulado */
     --color-text-light: #ffffff;
     --color-accent-blue: #001133;
     --color-accent-orange: #ff9900;
@@ -47,7 +47,7 @@ a {
     width: 100%;
     max-width: 1200px; /* LARGURA TRAVADA (Mesma da imagem) */
     height: 75px; 
-    background-color: #12163b; 
+    background-color: #0a1c4a; 
     border-radius: 15px 15px 0 0; /* Arredonda SÓ em cima! Embaixo fica reto pra colar na imagem */
     padding: 0 30px;
 }
