@@ -4,38 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixelate</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="teste.css">
 </head>
 <body>
 
     <header class="main-header">
-        <div class="nav-container">
-           <div class="dropdown-profile">
-    
-    <a href="#" class="profile-icon" onclick="toggleProfileDropdown()">
-        
-    </a>
-</div>
+        <nav class="nav-container">
+            <a href="#" class="site-logo-link">
+                <img src="./assets/pixelate-removebg.png" alt="Pixelate Logo" class="nav-logo">
+            </a>
 
-            <nav class="main-nav">
-                <a href="duvidas.html" class="nav-link" target="_blank">DÚVIDAS</a>
+            <div class="main-nav">
                 <a href="eventos.html" class="nav-link">EVENTOS</a>
-                <a href="cadastro-login.html" class="nav-link" target="_blank">CADASTRAR/LOGAR</a>
-            </nav>
-        </div>
+                <a href="cadastro-login.html" class="nav-link">CADASTRO</a>
+                <a href="duvidas.html" class="nav-link">DUVIDAS</a>
+            </div>
 
-        <a href="#" class="site-logo-link">
-            <img src="../assets/gemini pixelate.jpg" alt="Pixelate Logo" class="site-logo-img">
-        </a>
-    </header>
+            <div class="nav-actions">
+                <input type="text" class="search-bar" placeholder="Buscar eventos...">
+                <div class="dropdown-profile">
+                    <a href="#" class="profile-icon" onclick="toggleProfileDropdown()">
+                        <img src="./assets/pfp.png.png" alt="pfp-icon" class="profile-avatar">
+                    </a>
+                    <div id="profileDropdownContent" class="dropdown-content">
+                        <a href="#">Perfil</a>
+                        <a href="#" onclick="fazerLogout()">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main class="hero-section">
-        <p class="chapter-info">Bem Vindo ao</p>
-        <h2 class="game-title">PIXELATE</h2>
-        <div class="character-silhouettes">
-            </div>
+        <p class="chapter-info">Encontre ou crie seu próprio evento</p>
+        <a href="eventos.html" class="btn-explore">Explorar Eventos</a>
     </main>
+
+    <section class="featured-events">
+        <h3 class="section-title">Eventos em Destaque</h3>
+        
+        <div class="carousel-container">
+            <button class="carousel-btn left-btn" onclick="moverCarrossel(-1)">❮</button>
+            
+            <div class="carousel-viewport">
+                
+                <div class="carousel-track" id="carouselTrack">
+                    </div>
+
+            </div>
+
+            <button class="carousel-btn right-btn" onclick="moverCarrossel(1)">❯</button>
+        </div>
+    </section>
+
     <script src="main.js"></script>
 </body>
 </html>
