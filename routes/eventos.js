@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const eventosController = require("../controllers/eventosController");
 
+// NOVA ROTA: Listar eventos em destaque (CARROSSEL)
+router.get("/destaques", eventosController.listarDestaques);
+
 // Listar eventos
 router.get("/", eventosController.listarEventos);
 

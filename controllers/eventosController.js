@@ -1,6 +1,19 @@
 const Evento = require("../models/evento");
 const Inscricao = require("../models/inscricao");
 
+// --- NOVA FUNÇÃO PARA O CARROSSEL ---
+const listarDestaques = async (req, res) => {
+  try {
+    const eventos = await Evento.find({}, { _id: 0, __v: 0 })
+                                .sort({ visitas: -1 }) // -1 traz do maior (mais visitado) para o menor
+                                .limit(3); // Garante que só venham 3 eventos
+    res.json(eventos);
+  } catch (error) {
+    console.error("Erro ao listar destaques:", error);
+    res.status(500).json({ error: "Erro ao listar eventos de destaque." });
+  }
+};
+
 const listarEventos = async (req, res) => {
   try {
     const eventos = await Evento.find({}, { _id: 0, __v: 0 });
@@ -13,7 +26,8 @@ const listarEventos = async (req, res) => {
 
 const criarEvento = async (req, res) => {
   try {
-    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, id_organizador } = req.body;
+    // ADICIONADO a "imagem" aqui no destructuring
+    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, id_organizador, imagem } = req.body;
 
     if (!id_organizador) {
       return res.status(400).json({ error: "Usuário não logado." });
@@ -27,7 +41,8 @@ const criarEvento = async (req, res) => {
       local,
       vagas,
       valor,
-      id_organizador
+      id_organizador,
+      imagem // ADICIONADO pro banco salvar a foto
     });
 
     res.status(201).json({ message: "Evento criado com sucesso!" });
@@ -40,11 +55,12 @@ const criarEvento = async (req, res) => {
 const atualizarEvento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor } = req.body;
+    // ADICIONADO a "imagem" aqui no destructuring
+    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, imagem } = req.body;
 
     const evento = await Evento.findOneAndUpdate(
       { id_evento: Number(id) },
-      { titulo, descricao, data_evento, hora_evento, local, vagas, valor },
+      { titulo, descricao, data_evento, hora_evento, local, vagas, valor, imagem }, // ADICIONADO aqui também
       { returnDocument: 'after' }
     );
 
@@ -75,6 +91,7 @@ const deletarEvento = async (req, res) => {
 };
 
 module.exports = {
+  listarDestaques, // EXPORTANDO a nova função
   listarEventos,
   criarEvento,
   atualizarEvento,

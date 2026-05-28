@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+    --color-background: #0E0B24; /* Fundo mais escuro/azulado */
+    --color-text-light: #ffffff;
+    --color-accent-blue: #001133;
+    --color-accent-orange: #ff9900;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', monospace;
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+/* ========================================= */
+/* --- NAVBAR ---                            */
+/* ========================================= */
+.main-header {
+    width: 100%;
+    background-color: transparent; 
+    display: flex;
+    justify-content: center; 
+    position: relative;
+    z-index: 10;
+    margin-top: 30px; /* Descola o bloco todo do topo da tela */
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* LARGURA TRAVADA (Mesma da imagem) */
+    height: 75px; 
+    background-color: #12163b; 
+    border-radius: 15px 15px 0 0; /* Arredonda SÓ em cima! Embaixo fica reto pra colar na imagem */
+    padding: 0 30px;
+}
+
+.site-logo-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-logo {
+    height: 150px; 
+    width: auto;
+    image-rendering: pixelated;
+}
+
+.main-nav {
+    display: flex;
+    gap: 50px; 
+    font-size: 0.75em;
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); 
+}
+
+.nav-link {
+    transition: color 0.2s;
+    letter-spacing: 1.5px;
+}
+
+.nav-link:hover {
+    color: var(--color-accent-orange);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-bar {
+    background-color: #0a0d26; 
+    border: 1px solid #202d60;
+    border-radius: 20px;
+    padding: 10px 18px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7em;
+    outline: none;
+    width: 220px;
+}
+
+/* ========================================= */
+/* --- DROPDOWN DO PERFIL ---                */
+/* ========================================= */
+.dropdown-profile {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-icon {
+    font-size: 24px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 55px; /* Tamanho exato para caber na barra de 75px */
+    height: 55px;
+    border-radius: 50%; /* Garante que o círculo fique perfeito */
+    object-fit: cover; /* Impede a imagem de esticar ou achatar */
+    border: 2px solid #202d60; /* Uma bordinha azul para combinar com a barra */
+    transition: transform 0.2s;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.1); /* Dá um efeitinho de zoom ao passar o mouse */
+    border-color: var(--color-accent-orange);
+}
+
+.dropdown-content {
+    position: absolute;
+    right: 0;
+    top: 150%;
+    background-color: #12163b;
+    min-width: 120px;
+    border-radius: 8px;
+    border: 1px solid #202d60;
+    display: none; /* ISSO AQUI ESCONDE O PERFIL/SAIR! */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
+}
+
+.dropdown-content.show {
+    display: flex; 
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8em;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--color-accent-orange);
+    color: black;
+}
+/* ========================================= */
+/* --- HERO SECTION ---                      */
+/* ========================================= */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* Joga o texto e o botão pro final da imagem */
+    width: 100%;
+    max-width: 1200px; /* MESMA LARGURA DA NAVBAR! */
+    height: 600px; /* Defina a altura que achar melhor para exibir a imagem */
+    margin: 0 auto; /* Centraliza na tela e gruda na navbar de cima */
+    position: relative;
+    text-align: center;
+    
+    /* A MÁGICA: Imagem como fundo do bloco */
+    background-image: url('./assets/pixelate.jpg'); 
+    background-size: cover;
+    background-position: center;
+    
+    border-radius: 0 0 15px 15px; /* Arredonda SÓ a base */
+    padding-bottom: 50px; /* Dá um espaço pro botão não colar no chão da imagem */
+}
+
+.chapter-info {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8); /* Sombra pra ler bem em cima da imagem */
+}
+
+.btn-explore {
+    background-color: var(--color-accent-orange);
+    color: black;
+    padding: 15px 40px;
+    font-size: 1em;
+    border-radius: 5px;
+    transition: transform 0.2s;
+    font-weight: bold;
+}
+
+.btn-explore:hover {
+    transform: scale(1.05);
+}
+/* ========================================= */
+/* --- CARROSSEL DE EVENTOS ---              */
+/* ========================================= */
+.featured-events {
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Garante que a seção inteira fique centralizada */
+}
+
+.section-title {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* AQUI ESTÁ A MÁGICA: MESMO TAMANHO DA NAVBAR! */
+}
+
+/* --- SETAS DO CARROSSEL --- */
+.carousel-btn {
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.left-btn {
+    left: -50px; /* Joga a seta esquerda pra fora do card */
+    background: transparent;
+}
+
+.right-btn {
+    right: 0; 
+    border-radius: 10px 0 0 10px; /* Fica coladinho na direita igual ao seu print */
+    background-color: #03040f; /* Fundo bem escuro */
+    height: 80px;
+    width: 35px;
+}
+
+/* --- A JANELA QUE ESCONDE O RESTO --- */
+.carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.carousel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease-in-out; /* A animação de deslizar! */
+}
+
+.event-card {
+    min-width: 100%; /* Cada card ocupa 100% da janela */
+    height: 500px; 
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0; /* Impede o HTML de esmagar os 3 cards no mesmo espaço */
+}
+/* --- CAIXA DE TEXTO NO CANTO INFERIOR --- */
+.card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 55%; 
+    background-color: #03040f; /* Cor de fundo escura do design */
+    padding: 30px;
+    text-align: left;
+    border-top-right-radius: 40px; /* O corte arredondado no canto superior direito! */
+}
+.card-info h4 { 
+    margin-bottom: 15px; 
+}
+
+.card-info p { 
+    font-size: 0.6em; 
+    margin-bottom: 20px; 
+    line-height: 1.8; 
+}
+
+.card-footer { 
+    display: flex; 
+    gap: 30px; 
+    font-size: 0.55em; 
+}

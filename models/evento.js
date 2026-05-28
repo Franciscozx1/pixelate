@@ -4,13 +4,17 @@ const Counter = require('./counter');
 const EventoSchema = new mongoose.Schema({
   id_evento: { type: Number, unique: true },
   titulo: String,
-  descricao: String,
+  descricao: String, 
   data_evento: String,
   hora_evento: String,
   local: String,
   vagas: Number,
   valor: Number,
-  id_organizador: Number
+  id_organizador: Number,
+  
+  // --- CAMPOS NOVOS AQUI DENTRO ---
+  imagem: String,
+  visitas: { type: Number, default: 0 }
 });
 
 EventoSchema.pre('save', async function () {
