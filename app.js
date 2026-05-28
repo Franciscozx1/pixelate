@@ -28,7 +28,11 @@ app.get('/', (req, res) => {
 const usuariosRoutes = require("./routes/usuarios");
 const eventosRoutes = require("./routes/eventos");
 const inscricoesRoutes = require("./routes/inscricoes");
+const avaliacoesRoutes = require("./routes/avaliacoes");
+const fotosRoutes     = require("./routes/fotos");
 
+app.use("/avaliacoes", avaliacoesRoutes);
+app.use("/fotos",      fotosRoutes);
 app.use("/usuarios", usuariosRoutes);
 app.use("/eventos", eventosRoutes);
 app.use("/inscricoes", inscricoesRoutes);
