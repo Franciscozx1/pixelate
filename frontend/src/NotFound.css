@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Exo+2:wght@400;600&display=swap');
+
+.not-found {
+  min-height: 100vh;
+  background-color: #030322;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.not-found-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.not-found-code {
+  font-family: 'Righteous', sans-serif;
+  font-size: 10rem;
+  color: #3B6FE8;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(59, 111, 232, 0.4);
+}
+
+.not-found-title {
+  font-family: 'Righteous', sans-serif;
+  font-size: 1.8rem;
+  color: #E8E8FF;
+}
+
+.not-found-sub {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1rem;
+  color: rgba(232, 232, 255, 0.65);
+  line-height: 1.6;
+}
+
+.btn-voltar {
+  margin-top: 8px;
+  background-color: #FF8C00;
+  color: #000;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 14px 36px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-voltar:hover {
+  opacity: 0.85;
+  color: #000;
+}

@@ -1,50 +1,34 @@
 const express = require("express");
+const cors    = require("cors");
+
+require("./db");
+
 const app = express();
 
+// ─── MIDDLEWARES ─────────────────────────────────────────
 app.use(express.json());
-// Dentro do seu arquivo app.js
 
-const cors = require("cors");
-
-const corsOptions = {
-  origin: '*', // Permite requisições de qualquer origem
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Permite todos os métodos HTTP
-  preflightContinue: false,
+app.use(cors({
+  origin: "http://localhost:5173", // porta padrão do Vite
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204
-};
+}));
 
-app.use(cors(corsOptions));
-
-const path = require('path');
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-
-// Importando rotas
-const usuariosRoutes = require("./routes/usuarios");
-const eventosRoutes = require("./routes/eventos");
+// ─── ROTAS DA API ─────────────────────────────────────────
+const usuariosRoutes   = require("./routes/usuarios");
+const eventosRoutes    = require("./routes/eventos");
 const inscricoesRoutes = require("./routes/inscricoes");
 const avaliacoesRoutes = require("./routes/avaliacoes");
-const fotosRoutes     = require("./routes/fotos");
+const fotosRoutes      = require("./routes/fotos");
 
+app.use("/usuarios",   usuariosRoutes);
+app.use("/eventos",    eventosRoutes);
+app.use("/inscricoes", inscricoesRoutes);
 app.use("/avaliacoes", avaliacoesRoutes);
 app.use("/fotos",      fotosRoutes);
-app.use("/usuarios", usuariosRoutes);
-app.use("/eventos", eventosRoutes);
-app.use("/inscricoes", inscricoesRoutes);
 
-app.get('/cadastro-login', (req, res) => {
-    console.log("Requisição para /cadastro-login recebida!");
-    res.sendFile(path.join(__dirname, 'public', 'cadastro-login.html'));
-});
-
-// Iniciando servidor
+// ─── INICIAR SERVIDOR ────────────────────────────────────
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`API rodando em http://localhost:${PORT}`);
 });
-

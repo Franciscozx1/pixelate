@@ -1,122 +1,113 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import Navbar from './Navbar'
 
-function App() {
-  const [count, setCount] = useState(0)
+const API = 'http://localhost:3000'
 
+// ─── HERO ─────────────────────────────────────────────────
+function Hero() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <main className="hero-section">
+      <p className="chapter-info">Encontre ou crie seu próprio evento</p>
+      <a href="/eventos" className="btn-explore">Explorar Eventos</a>
+    </main>
   )
 }
 
-export default App
+// ─── CARROSSEL ────────────────────────────────────────────
+function Carousel() {
+  const [eventos, setEventos] = useState([])
+  const [index, setIndex] = useState(0)
+  const intervalRef = useRef(null)
+
+  useEffect(() => {
+    async function carregarDestaques() {
+      try {
+        const res = await fetch(`${API}/eventos/destaques`)
+        const data = await res.json()
+        if (data && data.length > 0) {
+          setEventos(data.slice(0, 3))
+        }
+      } catch (err) {
+        console.error('Erro ao carregar carrossel:', err)
+      }
+    }
+    carregarDestaques()
+  }, [])
+
+  useEffect(() => {
+    if (eventos.length === 0) return
+    intervalRef.current = setInterval(() => {
+      setIndex(i => (i + 1) % eventos.length)
+    }, 5000)
+    return () => clearInterval(intervalRef.current)
+  }, [eventos])
+
+  function mover(direcao) {
+    clearInterval(intervalRef.current)
+    setIndex(i => (i + direcao + eventos.length) % eventos.length)
+    intervalRef.current = setInterval(() => {
+      setIndex(i => (i + 1) % eventos.length)
+    }, 5000)
+  }
+
+  function formatarData(data) {
+    if (!data) return 'A definir'
+    const p = data.split('T')[0].split('-')
+    return `${p[2]}/${p[1]}/${p[0]}`
+  }
+
+  if (eventos.length === 0) return null
+
+  const evento = eventos[index]
+  const imagemUrl = evento.imagem || '/assets/pixelate.jpg'
+
+  return (
+    <section className="featured-events">
+      <h3 className="section-title">Eventos em Destaque</h3>
+
+      <div className="carousel-container">
+        <button className="carousel-btn left-btn" onClick={() => mover(-1)}>❮</button>
+
+        <div className="carousel-viewport">
+          <div
+            className="event-card"
+            style={{ backgroundImage: `url('${imagemUrl}')` }}
+          >
+            <div className="card-info">
+              <h4>{evento.titulo || 'Nome do Evento'}</h4>
+              <p>{evento.descricao || 'Participe deste evento incrível na plataforma Pixelate!'}</p>
+              <div className="card-footer">
+                <span>Data: {formatarData(evento.data_evento)}</span>
+                <span>Local: {evento.local || 'A definir'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button className="carousel-btn right-btn" onClick={() => mover(1)}>❯</button>
+      </div>
+    </section>
+  )
+}
+
+// ─── FOOTER ───────────────────────────────────────────────
+function Footer() {
+  return (
+    <footer className="main-footer">
+      <p>© 2026 Pixelate. Todos os direitos reservados.</p>
+    </footer>
+  )
+}
+
+// ─── APP ──────────────────────────────────────────────────
+export default function App() {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <Carousel />
+      <Footer />
+    </>
+  )
+}
