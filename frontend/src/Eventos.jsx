@@ -308,13 +308,16 @@ export default function Eventos() {
       {/* Hero */}
       <div className="eventos-hero">
         <h1 className="eventos-hero-titulo">Eventos</h1>
-        <input
-          type="text"
-          className="eventos-busca"
-          placeholder="Buscar por nome, categoria ou local..."
-          value={busca}
-          onChange={e => setBusca(e.target.value)}
-        />
+        <div className="eventos-hero-acoes">
+          <input
+            type="text"
+            className="eventos-busca"
+            placeholder="Buscar por nome, categoria ou local..."
+            value={busca}
+            onChange={e => setBusca(e.target.value)}
+          />
+          <a href="/criar-evento" className="btn-criar-evento">+ Criar evento</a>
+        </div>
       </div>
 
       {/* Grid */}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Duvidas.css'
+import Navbar from './Navbar'
 
 const faqs = [
   {
@@ -71,6 +72,10 @@ function Item({ pergunta, resposta }) {
 export default function Duvidas() {
   return (
     <div className="duvidas-page">
+      <Navbar />
+      <div className='div-nav-container'>
+
+      </div>
       <div className="duvidas-hero">
         <h1 className="duvidas-titulo">Dúvidas Frequentes</h1>
         <p className="duvidas-sub">Encontre respostas para as perguntas mais comuns sobre o Pixelate.</p>

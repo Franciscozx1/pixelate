@@ -6,6 +6,18 @@
   padding-bottom: 64px;
 }
 
+.div-nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 75px;
+  background-color: var(--bg-nav);
+  padding: 0 30px;
+}
+
 .duvidas-hero {
   background-color: #0a1c4a;
   padding: 48px 64px;

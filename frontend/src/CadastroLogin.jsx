@@ -66,7 +66,10 @@ export default function CadastroLogin() {
   return (
     <div className="auth-page">
       <div className="auth-box">
-        <img src="/assets/pixelate-nav.png" alt="Pixelate" className="auth-logo" />
+        <a href="/">
+          <img src="/assets/pixelate-nav.png" alt="Pixelate" className="auth-logo" />
+        </a>
+        
 
         <div className="auth-tabs">
           <button

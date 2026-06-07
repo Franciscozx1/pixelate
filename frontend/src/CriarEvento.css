@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Exo+2:wght@400;500;600;700&display=swap');
+
+.ce-page {
+  min-height: 100vh;
+  background-color: #030322;
+  padding-bottom: 64px;
+}
+
+.ce-hero {
+  background-color: #0a1c4a;
+  padding: 40px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ce-titulo {
+  font-family: 'Righteous', sans-serif;
+  font-size: 2rem;
+  color: #E8E8FF;
+}
+
+.btn-novo-evento {
+  background-color: #FF8C00;
+  color: #000;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-novo-evento:hover { opacity: 0.85; }
+
+.ce-erro {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.85rem;
+  color: #ff6b6b;
+  text-align: center;
+  padding: 12px;
+}
+
+.ce-ok {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.85rem;
+  color: #6bffb8;
+  text-align: center;
+  padding: 12px;
+}
+
+.ce-secao {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 0 32px;
+}
+
+.ce-secao-titulo {
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3B6FE8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(59,111,232,0.2);
+}
+
+.ce-vazio {
+  font-family: 'Exo 2', sans-serif;
+  color: rgba(232,232,255,0.45);
+  font-size: 0.9rem;
+}
+
+/* ─── FORM ───────────────────────────────────────────────── */
+.ce-form {
+  background-color: #0a1c4a;
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ce-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ce-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ce-campo-full {
+  grid-column: 1 / -1;
+}
+
+.ce-campo label {
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #E8E8FF;
+}
+
+.ce-campo input,
+.ce-campo select,
+.ce-campo textarea {
+  background-color: #07091e;
+  border: 1px solid #202d60;
+  border-radius: 8px;
+  padding: 11px 14px;
+  color: white;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.ce-campo input:focus,
+.ce-campo select:focus,
+.ce-campo textarea:focus { border-color: #3B6FE8; }
+
+.ce-campo select option { background-color: #0a1c4a; }
+
+.ce-acoes {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn-ce-salvar {
+  background-color: #FF8C00;
+  color: #000;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-ce-salvar:hover:not(:disabled) { opacity: 0.85; }
+.btn-ce-salvar:disabled { opacity: 0.5; cursor: default; }
+
+.btn-ce-cancelar {
+  background: transparent;
+  border: 1px solid rgba(232,232,255,0.2);
+  color: rgba(232,232,255,0.65);
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-ce-cancelar:hover { background: rgba(232,232,255,0.05); }
+
+/* ─── LISTA DE CARDS ─────────────────────────────────────── */
+.ce-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.ce-card {
+  background-color: #0a1c4a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ce-card-img {
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.ce-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #3B6FE8;
+  color: white;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.ce-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ce-card-titulo {
+  font-family: 'Righteous', sans-serif;
+  font-size: 1rem;
+  color: #E8E8FF;
+}
+
+.ce-card-meta {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(232,232,255,0.55);
+}
+
+.ce-card-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-editar {
+  flex: 1;
+  background-color: #3B6FE8;
+  color: white;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-editar:hover { opacity: 0.85; }
+
+.btn-deletar {
+  flex: 1;
+  background-color: rgba(255,107,107,0.15);
+  color: #ff6b6b;
+  border: 1px solid rgba(255,107,107,0.3);
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-deletar:hover { background-color: rgba(255,107,107,0.25); }
+
+/* ─── NÃO LOGADO ─────────────────────────────────────────── */
+.ce-nao-logado {
+  min-height: 80vh;
+  background-color: #030322;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.ce-nao-logado-box {
+  background-color: #0a1c4a;
+  border-radius: 16px;
+  padding: 48px 40px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid rgba(59, 111, 232, 0.2);
+}
+
+.ce-nao-logado-icone {
+  font-size: 2.5rem;
+}
+
+.ce-nao-logado-titulo {
+  font-family: 'Righteous', sans-serif;
+  font-size: 1.4rem;
+  color: #E8E8FF;
+}
+
+.ce-nao-logado-texto {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(232, 232, 255, 0.55);
+  line-height: 1.6;
+}
+
+.btn-ce-login {
+  margin-top: 8px;
+  background-color: #FF8C00;
+  color: #000;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-ce-login:hover { opacity: 0.85; color: #000; }

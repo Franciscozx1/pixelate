@@ -7,12 +7,14 @@ import Eventos from './Eventos'
 import CadastroLogin from './CadastroLogin'
 import Perfil from './Perfil'
 import Duvidas from './Duvidas'
+import CriarEvento from './CriarEvento'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/eventos" element={<Eventos />} />
+      <Route path="/criar-evento" element={<CriarEvento />} />
       <Route path="/cadastro-login" element={<CadastroLogin />} />
       <Route path="/duvidas" element={<Duvidas />} />
       <Route path="/perfil" element={<Perfil />} />
