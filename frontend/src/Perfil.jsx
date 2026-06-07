@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import './Perfil.css'
+import { useAuth } from './hooks/useAuth'
 
 const API = 'http://localhost:3000'
 
 export default function Perfil() {
-  const userId = localStorage.getItem('userId')
+  const { userId, logout } = useAuth()
   const [usuario, setUsuario] = useState(null)
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
@@ -50,11 +51,7 @@ export default function Perfil() {
     }
   }
 
-  function handleLogout() {
-    localStorage.removeItem('userId')
-    localStorage.removeItem('userName')
-    window.location.href = '/'
-  }
+ 
 
   if (!usuario) return (
     <div className="perfil-page">
@@ -123,7 +120,7 @@ export default function Perfil() {
           <button className="btn-salvar" type="submit">Salvar alterações</button>
         </form>
 
-        <button className="btn-logout" onClick={handleLogout}>Sair da conta</button>
+        <button className="btn-logout" onClick={logout}>Sair da conta</button>
       </div>
     </div>
   )

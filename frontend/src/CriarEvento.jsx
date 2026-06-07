@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Navbar from './Navbar'
 import './CriarEvento.css'
+import { useAuth } from './hooks/useAuth'
 
 const API = 'http://localhost:3000'
 const CATEGORIAS = ['Tecnologia', 'Música', 'Esportes', 'Arte', 'Gastronomia', 'Educação', 'Games', 'Outro']
@@ -8,16 +9,25 @@ const CATEGORIAS = ['Tecnologia', 'Música', 'Esportes', 'Arte', 'Gastronomia', 
 function FormEvento({ inicial, onSalvar, onCancelar, loading }) {
   const [form, setForm] = useState(inicial || {
     titulo: '', descricao: '', data_evento: '', hora_evento: '',
-    local: '', vagas: '', valor: '', categoria: '', imagem: ''
+    local: '', vagas: '', valor: '', categoria: ''
   })
+  const [arquivoFoto, setArquivoFoto] = useState(null)
+  const [previewFoto, setPreviewFoto] = useState(inicial?.foto || '')
 
   function set(campo, valor) {
     setForm(f => ({ ...f, [campo]: valor }))
   }
 
+  function handleFoto(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setArquivoFoto(file)
+    setPreviewFoto(URL.createObjectURL(file))
+  }
+
   function handleSubmit(e) {
     e.preventDefault()
-    onSalvar(form)
+    onSalvar(form, arquivoFoto)
   }
 
   return (
@@ -54,10 +64,24 @@ function FormEvento({ inicial, onSalvar, onCancelar, loading }) {
             {CATEGORIAS.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
+
+        {/* ─── CAMPO DE FOTO ─── */}
         <div className="ce-campo ce-campo-full">
-          <label>URL da imagem</label>
-          <input value={form.imagem} onChange={e => set('imagem', e.target.value)} placeholder="https://..." />
+          <label>Foto do evento</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFoto}
+          />
+          {previewFoto && (
+            <img
+              src={previewFoto}
+              alt="Preview da foto"
+              style={{ marginTop: 10, maxHeight: 180, borderRadius: 8, objectFit: 'cover' }}
+            />
+          )}
         </div>
+
         <div className="ce-campo ce-campo-full">
           <label>Descrição</label>
           <textarea value={form.descricao} onChange={e => set('descricao', e.target.value)} rows={4} placeholder="Descreva o evento..." />
@@ -80,11 +104,16 @@ function CardEvento({ evento, onEditar, onDeletar }) {
     return `${p[2]}/${p[1]}/${p[0]}`
   }
 
+  // 🛠️ RESOLUÇÃO DA IMAGEM: Concatenamos a URL da API com o caminho salvo do banco (evento.imagem)
+  const urlDaImagem = evento.imagem 
+    ? `${API}${evento.imagem}` 
+    : '/assets/pixelate.jpg';
+
   return (
     <div className="ce-card">
       <div
         className="ce-card-img"
-        style={{ backgroundImage: `url('${evento.imagem || '/assets/pixelate.jpg'}')` }}
+        style={{ backgroundImage: `url('${urlDaImagem}')` }}
       >
         {evento.categoria && <span className="ce-tag">{evento.categoria}</span>}
       </div>
@@ -101,7 +130,8 @@ function CardEvento({ evento, onEditar, onDeletar }) {
 }
 
 export default function CriarEvento() {
-  const userId = localStorage.getItem('userId')
+
+  const { userId } = useAuth()
   const [meusEventos, setMeusEventos] = useState([])
   const [editando, setEditando] = useState(null)
   const [criando, setCriando] = useState(false)
@@ -121,14 +151,26 @@ export default function CriarEvento() {
     } catch { setErro('Erro ao carregar seus eventos.') }
   }
 
-  async function handleCriar(form) {
+  // ─── Monta FormData com campos + arquivo (se houver) ───────────────────────
+  function montarFormData(form, arquivoFoto, extras = {}) {
+    const fd = new FormData()
+    Object.entries(form).forEach(([k, v]) => fd.append(k, v))
+    Object.entries(extras).forEach(([k, v]) => fd.append(k, v))
+    // 👇 AQUI ESTAVA O ERRO! Agora envia como "foto"
+    if (arquivoFoto) fd.append('foto', arquivoFoto)
+    return fd
+  }
+
+  async function handleCriar(form, arquivoFoto) {
     setLoading(true); setErro(''); setOk('')
     try {
-      const res = await fetch(`${API}/eventos`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, id_organizador: Number(userId), vagas: Number(form.vagas), valor: Number(form.valor) })
+      const fd = montarFormData(form, arquivoFoto, {
+        id_organizador: userId,
+        vagas: Number(form.vagas),
+        valor: Number(form.valor)
       })
+
+      const res = await fetch(`${API}/eventos`, { method: 'POST', body: fd })
       const json = await res.json()
       if (res.ok) {
         setOk('Evento criado com sucesso!')
@@ -139,14 +181,15 @@ export default function CriarEvento() {
     finally { setLoading(false) }
   }
 
-  async function handleEditar(form) {
+  async function handleEditar(form, arquivoFoto) {
     setLoading(true); setErro(''); setOk('')
     try {
-      const res = await fetch(`${API}/eventos/${editando.id_evento}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, vagas: Number(form.vagas), valor: Number(form.valor) })
+      const fd = montarFormData(form, arquivoFoto, {
+        vagas: Number(form.vagas),
+        valor: Number(form.valor)
       })
+
+      const res = await fetch(`${API}/eventos/${editando.id_evento}`, { method: 'PUT', body: fd })
       const json = await res.json()
       if (res.ok) {
         setOk('Evento atualizado!')
@@ -197,7 +240,7 @@ export default function CriarEvento() {
         </div>
 
         {erro && <p className="ce-erro">{erro}</p>}
-        {ok  && <p className="ce-ok">{ok}</p>}
+        {ok && <p className="ce-ok">{ok}</p>}
 
         {criando && (
           <div className="ce-secao">

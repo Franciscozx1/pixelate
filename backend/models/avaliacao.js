@@ -10,12 +10,13 @@ const avaliacaoSchema = new mongoose.Schema({
 });
  
 // Auto-incrementa id_avaliacao
-avaliacaoSchema.pre("save", async function (next) {
+avaliacaoSchema.pre("save", async function () {
   if (this.isNew) {
     const ultima = await mongoose.model("Avaliacao").findOne().sort({ id_avaliacao: -1 });
     this.id_avaliacao = ultima ? ultima.id_avaliacao + 1 : 1;
   }
-  next();
+  // Não precisamos mais do next(). Quando a função async termina, 
+  // o Mongoose entende sozinho que pode prosseguir para o salvamento.
 });
  
 module.exports = mongoose.model("Avaliacao", avaliacaoSchema);

@@ -1,5 +1,6 @@
 const express = require("express");
 const cors    = require("cors");
+const path    = require("path"); // 1️⃣ ADICIONADO: Importar a biblioteca de caminhos
 
 require("./db");
 
@@ -13,6 +14,11 @@ app.use(cors({
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204
 }));
+
+// 2️⃣ ADICIONADO: Liberar acesso público à pasta de uploads
+// Como o multer salva em "../public/uploads" a partir da pasta controllers, 
+// a pasta public fica na raiz do backend.
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 // ─── ROTAS DA API ─────────────────────────────────────────
 const usuariosRoutes   = require("./routes/usuarios");

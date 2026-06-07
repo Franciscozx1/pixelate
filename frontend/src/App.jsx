@@ -60,7 +60,9 @@ function Carousel() {
   if (eventos.length === 0) return null
 
   const evento = eventos[index]
-  const imagemUrl = evento.imagem || '/assets/pixelate.jpg'
+  
+  // 🛠️ O PULO DO GATO: Juntamos a URL da API com o caminho da imagem salvo no banco
+  const imagemUrl = evento.imagem ? `${API}${evento.imagem}` : '/assets/pixelate.jpg'
 
   return (
     <section className="featured-events">

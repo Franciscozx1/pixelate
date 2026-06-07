@@ -1,7 +1,6 @@
 const Evento = require("../models/evento");
 const Inscricao = require("../models/inscricao");
 
-// --- NOVA FUNÇÃO PARA O CARROSSEL ---
 // --- NOVA FUNÇÃO PARA O CARROSSEL (BASEADA EM INSCRIÇÕES) ---
 const listarDestaques = async (req, res) => {
   try {
@@ -29,6 +28,7 @@ const listarDestaques = async (req, res) => {
   }
 };
 
+// Listar todos os eventos
 const listarEventos = async (req, res) => {
   try {
     const eventos = await Evento.find({}, { _id: 0, __v: 0 });
@@ -39,14 +39,24 @@ const listarEventos = async (req, res) => {
   }
 };
 
+// Criar evento (Adaptado para ler FormData + Multer e blindar números)
 const criarEvento = async (req, res) => {
   try {
-    // ADICIONADO a "imagem" aqui no destructuring
-    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, id_organizador, imagem } = req.body;
+    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, id_organizador, categoria } = req.body;
 
     if (!id_organizador) {
       return res.status(400).json({ error: "Usuário não logado." });
     }
+
+    // A foto chega de forma separada pelo req.file. Vamos pegar o caminho gerado pelo Multer.
+    let caminhoImagem = null;
+    if (req.file) {
+      caminhoImagem = `/uploads/${req.file.filename}`;
+    }
+
+    // 🛡️ BLINDAGEM DOS NÚMEROS: 
+    const vagasConvertidas = Number(vagas) || 0;
+    const valorConvertido = Number(valor) || 0;
 
     await Evento.create({
       titulo,
@@ -54,10 +64,11 @@ const criarEvento = async (req, res) => {
       data_evento,
       hora_evento,
       local,
-      vagas,
-      valor,
+      vagas: vagasConvertidas, 
+      valor: valorConvertido,  
+      categoria,
       id_organizador,
-      imagem // ADICIONADO pro banco salvar a foto
+      imagem: caminhoImagem 
     });
 
     res.status(201).json({ message: "Evento criado com sucesso!" });
@@ -67,15 +78,36 @@ const criarEvento = async (req, res) => {
   }
 };
 
+// Atualizar evento (✅ CORRIGIDO E BLINDADO CONTRA NaN)
 const atualizarEvento = async (req, res) => {
   try {
     const { id } = req.params;
-    // ADICIONADO a "imagem" aqui no destructuring
-    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, imagem } = req.body;
+    const { titulo, descricao, data_evento, hora_evento, local, vagas, valor, categoria } = req.body;
+
+    // 🛡️ BLINDAGEM DOS NÚMEROS IGUAL À CRIAÇÃO:
+    const vagasConvertidas = Number(vagas) || 0;
+    const valorConvertido = Number(valor) || 0;
+
+    // Prepara o objeto padrão com os campos de texto modificados
+    const dadosAtualizados = {
+      titulo,
+      descricao,
+      data_evento,
+      hora_evento,
+      local,
+      vagas: vagasConvertidas,
+      valor: valorConvertido,
+      categoria
+    };
+
+    // Se o usuário subiu uma NOVA foto durante a edição, adicionamos o novo caminho ao objeto de atualização
+    if (req.file) {
+      dadosAtualizados.imagem = `/uploads/${req.file.filename}`;
+    }
 
     const evento = await Evento.findOneAndUpdate(
       { id_evento: Number(id) },
-      { titulo, descricao, data_evento, hora_evento, local, vagas, valor, imagem }, // ADICIONADO aqui também
+      dadosAtualizados, 
       { returnDocument: 'after' }
     );
 
@@ -90,6 +122,7 @@ const atualizarEvento = async (req, res) => {
   }
 };
 
+// Deletar evento e inscrições vinculadas
 const deletarEvento = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,7 +139,7 @@ const deletarEvento = async (req, res) => {
 };
 
 module.exports = {
-  listarDestaques, // EXPORTANDO a nova função
+  listarDestaques,
   listarEventos,
   criarEvento,
   atualizarEvento,
